@@ -1,0 +1,17 @@
+# Usage: brew bundle brewfile
+
+# Update to latest version of Homebrew
+update
+
+# Update already-installed packages
+upgrade
+
+install zsh
+install tmux
+install macvim
+
+tap Goles/battery
+install battery
+
+# Remove outdated versions
+cleanup
