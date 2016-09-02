@@ -23,7 +23,25 @@ Plug 'tpope/vim-sleuth'
 " Automatically complete brackets, parentheses, etc.
 Plug 'jiangmiao/auto-pairs'
 
+" Automatically end certain structures (add end after if in Ruby, for example)
+Plug 'tpope/vim-endwise'
+
 " Navigate between vim and tmux panes easily
 Plug 'christoomey/vim-tmux-navigator'
+
+" Ruby support
+Plug 'vim-ruby/vim-ruby'
+
+" Ruby on Rails plugin
+Plug 'tpope/vim-rails'
+
+" Ruby bundler support
+Plug 'tpope/vim-bundler'
+
+" Tag file manager with automatic generation
+Plug 'ludovicchabant/vim-gutentags'
+
+" Syntax checking
+Plug 'scrooloose/syntastic'
 
 call plug#end()

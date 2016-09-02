@@ -72,15 +72,6 @@ set incsearch
 " Always display the status line, even if only one window is displayed.
 set laststatus=2
 
-" Put git status, column/row number, total lines, and percentage in status
-set statusline=%F%m%r%h%w\ %{fugitive#statusline()}\ [%l,%c]\ [%L,%p%%]
-
-" highlight the status bar when in insert mode
-if version >= 700
-  au InsertEnter * hi StatusLine ctermfg=235 ctermbg=2
-  au InsertLeave * hi StatusLine ctermbg=240 ctermfg=12
-endif
-
 " Show extra white space characters
 set list listchars=tab:»·,trail:·,nbsp:·
 
@@ -97,6 +88,27 @@ autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
+
+"--------------------------------------------------
+" Status line
+"--------------------------------------------------
+
+" Put git status, column/row number, total lines, and percentage in status
+set statusline=%F%m%r%h%w\ %{fugitive#statusline()}\ [%l,%c]\ [%L,%p%%]
+
+" Add Gutentags to status line
+set statusline+=\ %{gutentags#statusline('Generating\ tags...')}
+
+" Add Syntastic to status line
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+" highlight the status bar when in insert mode
+if version >= 700
+  au InsertEnter * hi StatusLine ctermfg=235 ctermbg=2
+  au InsertLeave * hi StatusLine ctermbg=240 ctermfg=12
+endif
 
 "--------------------------------------------------
 " Usability options
@@ -238,11 +250,31 @@ augroup END
 " NERDTree
 
 " Close NERDTree after a file is opened
-let g:NERDTreeQuitOnOpen=1
+let g:NERDTreeQuitOnOpen = 1
 
 " Show hidden files by default
-let NERDTreeShowHidden=1
+let NERDTreeShowHidden = 1
 
 " Open NERDTree when vim is opened without a file specified
-autocmd StdinReadPre * let s:std_in=1
+autocmd StdinReadPre * let s:std_in = 1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" Syntastic
+
+" Place any detected errors into location-list
+let g:syntastic_always_populate_loc_list = 1
+
+" Error windows automatically opens and closes
+let g:syntastic_auto_loc_list = 1
+
+" Run syntax checks when buffers are loaded
+let g:syntastic_check_on_open = 1
+
+" Disables checks when saving and quitting Vim
+let g:syntastic_check_on_wq = 0
+
+" Runs all checkers on a file (by default, checks stop on first error)
+let g:syntastic_aggregate_errors = 1
+
+" Filetype checkers
+let g:syntastic_ruby_checkers = ["mri", "rubocop"]

@@ -1,6 +1,8 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/matthew.chudoba/.oh-my-zsh
 export ZSH=$HOME/dotfiles/oh-my-zsh
+
+# Set default editor to MacVim
+export EDITOR="mvim -v"
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -25,3 +27,22 @@ source $ZSH/oh-my-zsh.sh
 unsetopt correct
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Custom aliases
+
+alias vim="mvim -v"
+alias c="clear"
+alias sl="ls"
+alias lsa="ls -a"
+alias gs="git status"
+alias gd="git diff"
+alias gdc="git diff --cached"
+alias gp="git pull"
+alias gl="git log"
+alias glo="git log --oneline"
+alias r="rails"
+alias mc="mvn clean"
+alias mi="mvn install -Dmaven.test.skip"
+alias mit="mvn install"
+alias mci="mvn clean install -Dmaven.test.skip"
+alias mcit="mvn clean install"
