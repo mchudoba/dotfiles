@@ -41,7 +41,17 @@ Plug 'tpope/vim-bundler'
 " Tag file manager with automatic generation
 Plug 'ludovicchabant/vim-gutentags'
 
-" Syntax checking
-Plug 'scrooloose/syntastic'
+" Comment functions
+Plug 'scrooloose/nerdcommenter'
+
+" Emmet integration
+Plug 'mattn/emmet-vim'
+
+" Status line customization
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" HTML tag matcher (use % to navigate)
+Plug 'tmhedberg/matchit'
 
 call plug#end()

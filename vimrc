@@ -48,19 +48,19 @@ set background=dark
 colorscheme base16-railscasts
 
 highlight clear SignColumn
-highlight VertSplit    ctermbg=236
-highlight ColorColumn  ctermbg=237
-highlight LineNr       ctermbg=236 ctermfg=240
-highlight CursorLineNr ctermbg=236 ctermfg=3
-highlight CursorLine   ctermbg=236
-highlight StatusLineNC ctermbg=238 ctermfg=0
-highlight StatusLine   ctermbg=240 ctermfg=12
-highlight IncSearch    ctermbg=3   ctermfg=1
-highlight Search       ctermbg=1   ctermfg=3
-highlight Visual       ctermbg=3   ctermfg=0
-highlight Pmenu        ctermbg=240 ctermfg=12
-highlight PmenuSel     ctermbg=3   ctermfg=1
-highlight SpellBad     ctermbg=0   ctermfg=1
+highlight VertSplit         ctermbg=236
+highlight ColorColumn       ctermbg=237
+highlight LineNr            ctermbg=236 ctermfg=240
+highlight CursorLineNr      ctermbg=236 ctermfg=3
+highlight CursorLine        ctermbg=236
+highlight StatusLineNC      ctermbg=238 ctermfg=0
+highlight StatusLine        ctermbg=240 ctermfg=12
+highlight IncSearch         ctermbg=3   ctermfg=1
+highlight Search            ctermbg=1   ctermfg=3
+highlight Visual            ctermbg=3   ctermfg=0
+highlight Pmenu             ctermbg=240 ctermfg=12
+highlight PmenuSel          ctermbg=3   ctermfg=1
+highlight SpellBad          ctermbg=0   ctermfg=1
 
 " Highlight searches (use <C-L> to temporarily turn off
 " highlighting)
@@ -180,6 +180,9 @@ set matchpairs+=<:>
 " Automatically rebalance windows on vim resize
 autocmd VimResized * :wincmd =
 
+" Backspace options
+set backspace=indent,eol,start
+
 "--------------------------------------------------
 " Key mappings
 "--------------------------------------------------
@@ -278,3 +281,19 @@ let g:syntastic_aggregate_errors = 1
 
 " Filetype checkers
 let g:syntastic_ruby_checkers = ["mri", "rubocop"]
+
+" Emmet
+
+" Remap Emmet leader
+let g:user_emmet_leader_key = '<C-U>'
+
+" Airline
+
+" Populate g:airline_symbols dictionary with powerline symbols
+let g:airline_powerline_fonts = 1
+
+" Default theme
+let g:airline_theme='bubblegum'
+
+" Enable buffer display
+let g:airline#extensions#tabline#enabled = 1
