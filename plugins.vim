@@ -4,18 +4,12 @@
 
 call plug#begin('~/.vim/plugged')
 
-" FZF
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
 
 " Git wrapper
 Plug 'tpope/vim-fugitive'
 
 " Git gutter diffs
 Plug 'airblade/vim-gitgutter'
-
-" File system navigator
-Plug 'scrooloose/nerdtree'
 
 " Indentation detector
 Plug 'tpope/vim-sleuth'
@@ -37,9 +31,6 @@ Plug 'tpope/vim-rails'
 
 " Ruby bundler support
 Plug 'tpope/vim-bundler'
-
-" Tag file manager with automatic generation
-Plug 'ludovicchabant/vim-gutentags'
 
 " Comment functions
 Plug 'scrooloose/nerdcommenter'

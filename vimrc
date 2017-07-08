@@ -250,18 +250,6 @@ augroup END
 " Plugin options
 "--------------------------------------------------
 
-" NERDTree
-
-" Close NERDTree after a file is opened
-let g:NERDTreeQuitOnOpen = 1
-
-" Show hidden files by default
-let NERDTreeShowHidden = 1
-
-" Open NERDTree when vim is opened without a file specified
-autocmd StdinReadPre * let s:std_in = 1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
 " Syntastic
 
 " Place any detected errors into location-list
