@@ -1,0 +1,47 @@
+#!/bin/bash
+
+directory=''
+forceDelete='false'
+
+usage () { echo "Usage: cleanup-git-branches -d DIRECTORY_NAME"; echo "Use -f flag to force delete branches";  }
+
+while getopts 'd:fh' flag; do
+    case "${flag}" in
+        d) directory="${OPTARG}" ;;
+        f) forceDelete='true' ;;
+        h) usage; exit ;;
+        *) error "Unexpected option ${flag}" ;;
+    esac
+done
+
+if [ ! "$directory"  ]; then
+    usage
+    exit 1
+fi
+
+if [ ! -d $directory  ]; then
+    echo "Error: $directory is not a valid directory"
+    exit 1
+fi
+
+deleteCommand="xargs git branch -d"
+if [ $forceDelete = true  ]; then
+    read -p "You are about to forcefully delete all branches. Are you sure? " yn
+    case $yn in
+        [Yy]es) ;;
+        *) echo "Exiting..."; exit;;
+    esac
+
+    deleteCommand="xargs git branch -D"
+fi
+
+find "$directory" -name .git -type d -maxdepth 2 -prune | while read repo; do
+    repoName=$(basename $(dirname $repo))
+    echo "---------- Cleaning $repoName"
+    (\
+        cd $repo && \
+        git remote prune origin &&\
+        git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print $1}' | eval $deleteCommand \
+    )
+done
+
