@@ -1,16 +1,23 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/dotfiles/oh-my-zsh
 
+export PATH=~/Library/Python/3.6/bin:$PATH
+
 # Set default editor to Vim
 export EDITOR="vim"
 
-# Default Java version
-export JAVA_HOME=`/usr/libexec/java_home -v 1.7`
+# Java environment setup
+# export JAVA_HOME=`/usr/libexec/java_home -v 1.7`
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
+
+# Use mysql 5.6
+export PATH="/usr/local/opt/mysql@5.6/bin:$PATH"
 
 # nvm setup
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -31,7 +38,7 @@ DISABLE_AUTO_TITLE="true"
 plugins=(brew, mvn)
 
 source $ZSH/oh-my-zsh.sh
-source ~/.vault_credentials
+source ~/.vivid_env
 
 unsetopt correct
 
@@ -64,9 +71,11 @@ alias mcitc="mvn clean install"
 alias mci-web="mvn -f ~/VividSeats/vivid-coreapi clean install -Dmaven.test.skip && mvn -f ~/VividSeats/vivid-web clean install -Dmaven.test.skip"
 alias mcit-web="mvn -f ~/VividSeats/vivid-coreapi clean install && mvn -f ~/VividSeats/vivid-web clean install"
 alias web="export cwd=\$(pwd) && cd ~/VividSeats/vivid-coreapi && mvn clean install -Dmaven.test.skip && cd ~/VividSeats/vivid-web && mvn clean install -Dmaven.test.skip && cd \$cwd"
+alias tfs="export cwd=\$(pwd) && cd ~/VividSeats/vivid-coreapi && mvn clean install -Dmaven.test.skip && cd ~/VividSeats/tfs-web && mvn clean install -Dmaven.test.skip && cd \$cwd"
 alias ws="export cwd=\$(pwd) && cd ~/VividSeats/vivid-coreapi && mvn clean install -Dmaven.test.skip && cd ~/VividSeats/vivid-web-services && mvn clean install -Dmaven.test.skip && cd \$cwd"
 alias sales="export cwd=\$(pwd) && cd ~/VividSeats/vivid-coreapi && mvn clean install -Dmaven.test.skip && cd ~/VividSeats/vivid-sales && mvn clean install -Dmaven.test.skip && cd \$cwd"
 alias web-test="export cwd=\$(pwd) && cd ~/VividSeats/vivid-coreapi && mvn clean install && cd ~/VividSeats/vivid-web && mvn clean install && cd \$cwd"
+alias tfs-test="export cwd=\$(pwd) && cd ~/VividSeats/vivid-coreapi && mvn clean install && cd ~/VividSeats/tfs-web && mvn clean install && cd \$cwd"
 alias ws-test="export cwd=\$(pwd) && cd ~/VividSeats/vivid-coreapi && mvn clean install && cd ~/VividSeats/vivid-web-services && mvn clean install && cd \$cwd"
 alias sales-test="export cwd=\$(pwd) && cd ~/VividSeats/vivid-coreapi && mvn clean install && cd ~/VividSeats/vivid-sales && mvn clean install && cd \$cwd"
 alias t="tmux a -t vivid"

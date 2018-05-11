@@ -226,10 +226,10 @@ nnoremap <Leader>b <C-^>
 " Indentation options
 "--------------------------------------------------
 
-" Indentation settings for using 4 spaces instead of tabs.
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
+" Indentation settings for using 2 spaces instead of tabs.
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
 set expandtab
 set smarttab
 

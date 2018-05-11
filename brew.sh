@@ -9,6 +9,7 @@ brew upgrade
 brew install zsh
 brew install tmux
 brew install macvim
+brew install jenv
 
 brew tap Goles/battery
 brew install battery

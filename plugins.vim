@@ -23,15 +23,6 @@ Plug 'tpope/vim-endwise'
 " Navigate between vim and tmux panes easily
 Plug 'christoomey/vim-tmux-navigator'
 
-" Ruby support
-Plug 'vim-ruby/vim-ruby'
-
-" Ruby on Rails plugin
-Plug 'tpope/vim-rails'
-
-" Ruby bundler support
-Plug 'tpope/vim-bundler'
-
 " Comment functions
 Plug 'scrooloose/nerdcommenter'
 
