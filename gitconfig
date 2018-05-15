@@ -1,14 +1,8 @@
 [core]
-	excludesfile = /Users/matthew.chudoba/.gitignore_global
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+  excludesfile = /Users/matthew.chudoba/.gitignore_global
 [user]
-	email = mchudoba5@gmail.com
-	name = Matt Chudoba
+  email = mchudoba5@gmail.com
+  name = Matt Chudoba
 [color]
     diff = auto
     status = auto
