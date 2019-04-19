@@ -4,6 +4,11 @@
 
 call plug#begin('~/.vim/plugged')
 
+" File explorer
+Plug 'scrooloose/nerdtree'
+
+" Comment functions
+Plug 'scrooloose/nerdcommenter'
 
 " Git wrapper
 Plug 'tpope/vim-fugitive'
@@ -17,23 +22,10 @@ Plug 'tpope/vim-sleuth'
 " Automatically complete brackets, parentheses, etc.
 Plug 'jiangmiao/auto-pairs'
 
-" Automatically end certain structures (add end after if in Ruby, for example)
-Plug 'tpope/vim-endwise'
-
 " Navigate between vim and tmux panes easily
 Plug 'christoomey/vim-tmux-navigator'
 
-" Comment functions
-Plug 'scrooloose/nerdcommenter'
-
-" Emmet integration
-Plug 'mattn/emmet-vim'
-
 " Status line customization
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-
-" HTML tag matcher (use % to navigate)
-Plug 'tmhedberg/matchit'
+Plug 'itchyny/lightline.vim'
 
 call plug#end()

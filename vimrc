@@ -36,16 +36,18 @@ set autochdir
 " Visual options
 "--------------------------------------------------
 
-" Display relative line numbers on the left
-set relativenumber
+" Display line numbers on the left
 set number
 
-" Calls function to toggle relative numbers
+" Uncomment to default relative numbers
+" set relativenumber
+
+" Calls function to toggle relative numbers (Ctrl+n)
 nnoremap <C-n> :set relativenumber!<CR>
 
 " Toggles relative numbers on insert
-autocmd InsertEnter * :set norelativenumber
-autocmd InsertLeave * :set relativenumber
+" autocmd InsertEnter * :set norelativenumber
+" autocmd InsertLeave * :set relativenumber
 
 " Use syntax highlighting.
 syntax on
@@ -54,7 +56,13 @@ syntax on
 set background=dark
 colorscheme base16-railscasts
 
+" Fix GitGutter
 highlight clear SignColumn
+highlight GitGutterAdd            ctermbg=236
+highlight GitGutterChange         ctermbg=236 ctermfg=yellow
+highlight GitGutterDelete         ctermbg=236
+highlight GitGutterChangeDelete   ctermbg=236
+
 highlight VertSplit         ctermbg=236
 highlight ColorColumn       ctermbg=237
 highlight LineNr            ctermbg=236 ctermfg=240
@@ -69,8 +77,7 @@ highlight Pmenu             ctermbg=240 ctermfg=12
 highlight PmenuSel          ctermbg=3   ctermfg=1
 highlight SpellBad          ctermbg=0   ctermfg=1
 
-" Highlight searches (use <C-L> to temporarily turn off
-" highlighting)
+" Highlight searches (use <C-L> to temporarily turn off highlighting)
 set hlsearch
 
 " Search as characters are entered
@@ -95,27 +102,6 @@ autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
-
-"--------------------------------------------------
-" Status line
-"--------------------------------------------------
-
-" Put git status, column/row number, total lines, and percentage in status
-set statusline=%F%m%r%h%w\ %{fugitive#statusline()}\ [%l,%c]\ [%L,%p%%]
-
-" Add Gutentags to status line
-set statusline+=\ %{gutentags#statusline('Generating\ tags...')}
-
-" Add Syntastic to status line
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-" highlight the status bar when in insert mode
-if version >= 700
-  au InsertEnter * hi StatusLine ctermfg=235 ctermbg=2
-  au InsertLeave * hi StatusLine ctermbg=240 ctermfg=12
-endif
 
 "--------------------------------------------------
 " Usability options
@@ -246,8 +232,6 @@ set smarttab
 " sw = shiftwidth
 augroup configgroup
     autocmd!
-    autocmd FileType ruby setlocal ts=2 sts=2 sw=2
-    autocmd FileType eruby setlocal ts=2 sts=2 sw=2
     autocmd FileType html setlocal ts=2 sts=2 sw=2
     autocmd FileType javascript setlocal ts=4 sts=4 sw=4
     autocmd FileType java setlocal ts=4 sts=4 sw=4
@@ -257,38 +241,28 @@ augroup END
 " Plugin options
 "--------------------------------------------------
 
-" Syntastic
+" NERDTree
 
-" Place any detected errors into location-list
-let g:syntastic_always_populate_loc_list = 1
+" Open NERDTree when vim is opened
+autocmd VimEnter * NERDTree
+autocmd VimEnter * wincmd p
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
-" Error windows automatically opens and closes
-let g:syntastic_auto_loc_list = 1
+" NERDCommenter
 
-" Run syntax checks when buffers are loaded
-let g:syntastic_check_on_open = 1
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
 
-" Disables checks when saving and quitting Vim
-let g:syntastic_check_on_wq = 0
+" Lightline
 
-" Runs all checkers on a file (by default, checks stop on first error)
-let g:syntastic_aggregate_errors = 1
-
-" Filetype checkers
-let g:syntastic_ruby_checkers = ["mri", "rubocop"]
-
-" Emmet
-
-" Remap Emmet leader
-let g:user_emmet_leader_key = '<C-U>'
-
-" Airline
-
-" Populate g:airline_symbols dictionary with powerline symbols
-let g:airline_powerline_fonts = 1
-
-" Default theme
-let g:airline_theme='bubblegum'
-
-" Enable buffer display
-let g:airline#extensions#tabline#enabled = 1
+let g:lightline = {
+      \ 'colorscheme': 'jellybeans',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head'
+      \ },
+      \ }

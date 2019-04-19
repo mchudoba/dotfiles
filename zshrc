@@ -14,10 +14,6 @@ eval "$(jenv init -)"
 # Use mysql 5.6
 export PATH="/usr/local/opt/mysql@5.6/bin:$PATH"
 
-# nvm setup
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
@@ -34,14 +30,18 @@ DISABLE_AUTO_TITLE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(brew, mvn)
+plugins=(brew, mvn, zsh-nvm)
 
 source $ZSH/oh-my-zsh.sh
 source ~/.vivid_env
 
 unsetopt correct
+#unsetopt autocd
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# NVM bash completion
+[[ -r $NVM_DIR/bash_completion ]] && \. $NVM_DIR/bash_completion
 
 # Custom aliases
 
@@ -59,7 +59,10 @@ alias gcl="git checkout @{-1}"
 alias gcs="git checkout stage"
 alias gb="git branch"
 alias gba="git branch -a"
-alias r="rails"
+alias python="python3"
+alias pip="pip3"
+alias python2="python"
+alias pip2="pip"
 alias mc="mvn clean"
 alias mi="mvn install -Dmaven.test.skip"
 alias mit="mvn install"
