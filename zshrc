@@ -30,7 +30,7 @@ DISABLE_AUTO_TITLE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(brew, mvn, zsh-nvm)
+plugins=(brew, mvn)
 
 source $ZSH/oh-my-zsh.sh
 source ~/.vivid_env
@@ -40,7 +40,9 @@ unsetopt correct
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# NVM bash completion
+# NVM setup and bash completion
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [[ -r $NVM_DIR/bash_completion ]] && \. $NVM_DIR/bash_completion
 
 # Custom aliases
