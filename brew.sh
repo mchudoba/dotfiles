@@ -6,13 +6,10 @@ brew update
 # Update already-installed packages
 brew upgrade
 
-brew install zsh
-brew install tmux
-brew install macvim
-brew install jenv
+brew install zsh tmux python wget pyenv pipenv
 
-brew tap Goles/battery
-brew install battery
+# brew tap Goles/battery
+# brew install battery
 
 # Remove outdated versions
 brew cleanup
