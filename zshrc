@@ -1,8 +1,6 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/dotfiles/oh-my-zsh
 
-export PATH=~/Library/Python/3.6/bin:$PATH
-
 # Set default editor to Vim
 export EDITOR="vim"
 
@@ -10,6 +8,9 @@ export EDITOR="vim"
 # export JAVA_HOME=`/usr/libexec/java_home -v 1.7`
 export PATH="$HOME/.jenv/bin:$PATH"
 eval "$(jenv init -)"
+
+# Python user packages (pip install --user)
+export PATH="$HOME/.local/bin:$PATH"
 
 # Use mysql 5.6
 export PATH="/usr/local/opt/mysql@5.6/bin:$PATH"
@@ -45,6 +46,11 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [[ -r $NVM_DIR/bash_completion ]] && \. $NVM_DIR/bash_completion
 
+# pyenv setup
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+
 # Custom aliases
 
 alias c="clear"
@@ -61,10 +67,6 @@ alias gcl="git checkout @{-1}"
 alias gcs="git checkout stage"
 alias gb="git branch"
 alias gba="git branch -a"
-alias python="python3"
-alias pip="pip3"
-alias python2="python"
-alias pip2="pip"
 alias mc="mvn clean"
 alias mi="mvn install -Dmaven.test.skip"
 alias mit="mvn install"
