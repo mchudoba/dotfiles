@@ -5,7 +5,6 @@ export ZSH=$HOME/dotfiles/oh-my-zsh
 export EDITOR="vim"
 
 # Java environment setup
-# export JAVA_HOME=`/usr/libexec/java_home -v 1.7`
 export PATH="$HOME/.jenv/bin:$PATH"
 eval "$(jenv init -)"
 
@@ -17,8 +16,6 @@ export PATH="/usr/local/opt/mysql@5.6/bin:$PATH"
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
 ZSH_THEME="matt"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
@@ -30,11 +27,10 @@ DISABLE_AUTO_TITLE="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(brew, mvn)
+# plugins=(brew, mvn)
 
 source $ZSH/oh-my-zsh.sh
-source ~/.vivid_env
+[ -f ~/.vivid_env ] && source ~/.vivid_env
 
 unsetopt correct
 #unsetopt autocd
@@ -86,3 +82,9 @@ alias ws-test="export cwd=\$(pwd) && cd ~/VividSeats/vivid-coreapi && mvn clean 
 alias sales-test="export cwd=\$(pwd) && cd ~/VividSeats/vivid-coreapi && mvn clean install && cd ~/VividSeats/vivid-sales && mvn clean install && cd \$cwd"
 alias t="tmux a -t vivid"
 
+# ZSH plugins
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# Ctrl+Space to accept current auto suggestion
+bindkey '^ ' autosuggest-accept
