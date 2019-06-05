@@ -52,30 +52,14 @@ nnoremap <C-n> :set relativenumber!<CR>
 " Use syntax highlighting.
 syntax on
 
-" Set colorscheme
-set background=dark
-colorscheme base16-railscasts
+" Set colorscheme (~/.vim/colors/)
+colorscheme lena
 
 " Fix GitGutter
-highlight clear SignColumn
-highlight GitGutterAdd            ctermbg=236
-highlight GitGutterChange         ctermbg=236 ctermfg=yellow
-highlight GitGutterDelete         ctermbg=236
-highlight GitGutterChangeDelete   ctermbg=236
-
-highlight VertSplit         ctermbg=236
-highlight ColorColumn       ctermbg=237
-highlight LineNr            ctermbg=236 ctermfg=240
-highlight CursorLineNr      ctermbg=236 ctermfg=3
-highlight CursorLine        ctermbg=236
-highlight StatusLineNC      ctermbg=238 ctermfg=0
-highlight StatusLine        ctermbg=240 ctermfg=12
-highlight IncSearch         ctermbg=3   ctermfg=1
-highlight Search            ctermbg=1   ctermfg=3
-highlight Visual            ctermbg=3   ctermfg=0
-highlight Pmenu             ctermbg=240 ctermfg=12
-highlight PmenuSel          ctermbg=3   ctermfg=1
-highlight SpellBad          ctermbg=0   ctermfg=1
+highlight GitGutterAdd            ctermbg=NONE ctermfg=2
+highlight GitGutterChange         ctermbg=NONE ctermfg=3
+highlight GitGutterDelete         ctermbg=NONE ctermfg=1
+highlight GitGutterChangeDelete   ctermbg=NONE ctermfg=3
 
 " Highlight searches (use <C-L> to temporarily turn off highlighting)
 set hlsearch
@@ -140,8 +124,8 @@ set ruler
 " dialogue asking if you wish to save changed files.
 set confirm
 
-" Use visual bell instead of beeping when doing something wrong
-set visualbell
+" Disable visual bell
+set t_vb=
 
 " Enable use of the mouse for all modes
 set mouse=a
@@ -220,22 +204,11 @@ nnoremap <Leader>b <C-^>
 "--------------------------------------------------
 
 " Indentation settings for using 2 spaces instead of tabs.
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
-set expandtab
 set smarttab
-
-" Options specific to a language.
-" ts = tabstop
-" sts = softtabstop
-" sw = shiftwidth
-augroup configgroup
-    autocmd!
-    autocmd FileType html setlocal ts=2 sts=2 sw=2
-    autocmd FileType javascript setlocal ts=4 sts=4 sw=4
-    autocmd FileType java setlocal ts=4 sts=4 sw=4
-augroup END
+set expandtab
+set tabstop=8
+set shiftwidth=4
+set softtabstop=4
 
 "--------------------------------------------------
 " Plugin options
@@ -257,7 +230,7 @@ let g:NERDSpaceDelims = 1
 " Lightline
 
 let g:lightline = {
-      \ 'colorscheme': 'jellybeans',
+      \ 'colorscheme': 'lena',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
