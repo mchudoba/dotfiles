@@ -1,5 +1,5 @@
 [core]
-  excludesfile = /Users/matthew.chudoba/.gitignore_global
+  excludesfile = ~/.gitignore_global
 [user]
   email = mchudoba5@gmail.com
   name = Matt Chudoba
