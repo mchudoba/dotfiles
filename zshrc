@@ -11,6 +11,18 @@ eval "$(jenv init -)"
 # Python user packages (pip install --user)
 export PATH="$HOME/.local/bin:$PATH"
 
+# pip zsh completion start
+function _pip_completion {
+  local words cword
+  read -Ac words
+  read -cn cword
+  reply=( $( COMP_WORDS="$words[*]" \
+             COMP_CWORD=$(( cword-1 )) \
+             PIP_AUTO_COMPLETE=1 $words[1] ) )
+}
+compctl -K _pip_completion pip
+# pip zsh completion end
+
 # Use mysql 5.6
 export PATH="/usr/local/opt/mysql@5.6/bin:$PATH"
 
@@ -30,7 +42,7 @@ DISABLE_AUTO_TITLE="true"
 # plugins=(brew, mvn)
 
 source $ZSH/oh-my-zsh.sh
-[ -f ~/.vivid_env ] && source ~/.vivid_env
+[ -f ~/.env ] && source ~/.env
 
 unsetopt correct
 #unsetopt autocd
@@ -43,15 +55,26 @@ export NVM_DIR="$HOME/.nvm"
 [[ -r $NVM_DIR/bash_completion ]] && \. $NVM_DIR/bash_completion
 
 # pyenv setup
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
 if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init --path)"
   eval "$(pyenv init -)"
+  export LDFLAGS="-L/usr/local/opt/zlib/lib -L/usr/local/opt/bzip2/lib"
+  export CPPFLAGS="-I/usr/local/opt/zlib/include -I/usr/local/opt/bzip2/include"
 fi
+
+# Virtualenv wrapper
+function venv { source "$1"/bin/activate }
+
+# Require virtualenv to install Pip packages
+export PIP_REQUIRE_VIRTUALENV=true
 
 # Custom aliases
 
 alias c="clear"
 alias sl="ls"
-alias lsa="ls -a"
+alias lsa="ls -lah"
 alias gs="git status"
 alias gd="git diff"
 alias gdc="git diff --cached"
@@ -63,24 +86,7 @@ alias gcl="git checkout @{-1}"
 alias gcs="git checkout stage"
 alias gb="git branch"
 alias gba="git branch -a"
-alias mc="mvn clean"
-alias mi="mvn install -Dmaven.test.skip"
-alias mit="mvn install"
-alias mci="mvn clean install -Dmaven.test.skip && c"
-alias mcit="mvn clean install && c"
-alias mcic="mvn clean install -Dmaven.test.skip"
-alias mcitc="mvn clean install"
-alias mci-web="mvn -f ~/VividSeats/vivid-coreapi clean install -Dmaven.test.skip && mvn -f ~/VividSeats/vivid-web clean install -Dmaven.test.skip"
-alias mcit-web="mvn -f ~/VividSeats/vivid-coreapi clean install && mvn -f ~/VividSeats/vivid-web clean install"
-alias web="export cwd=\$(pwd) && cd ~/VividSeats/vivid-coreapi && mvn clean install -Dmaven.test.skip && cd ~/VividSeats/vivid-web && mvn clean install -Dmaven.test.skip && cd \$cwd"
-alias tfs="export cwd=\$(pwd) && cd ~/VividSeats/vivid-coreapi && mvn clean install -Dmaven.test.skip && cd ~/VividSeats/tfs-web && mvn clean install -Dmaven.test.skip && cd \$cwd"
-alias ws="export cwd=\$(pwd) && cd ~/VividSeats/vivid-coreapi && mvn clean install -Dmaven.test.skip && cd ~/VividSeats/vivid-web-services && mvn clean install -Dmaven.test.skip && cd \$cwd"
-alias sales="export cwd=\$(pwd) && cd ~/VividSeats/vivid-coreapi && mvn clean install -Dmaven.test.skip && cd ~/VividSeats/vivid-sales && mvn clean install -Dmaven.test.skip && cd \$cwd"
-alias web-test="export cwd=\$(pwd) && cd ~/VividSeats/vivid-coreapi && mvn clean install && cd ~/VividSeats/vivid-web && mvn clean install && cd \$cwd"
-alias tfs-test="export cwd=\$(pwd) && cd ~/VividSeats/vivid-coreapi && mvn clean install && cd ~/VividSeats/tfs-web && mvn clean install && cd \$cwd"
-alias ws-test="export cwd=\$(pwd) && cd ~/VividSeats/vivid-coreapi && mvn clean install && cd ~/VividSeats/vivid-web-services && mvn clean install && cd \$cwd"
-alias sales-test="export cwd=\$(pwd) && cd ~/VividSeats/vivid-coreapi && mvn clean install && cd ~/VividSeats/vivid-sales && mvn clean install && cd \$cwd"
-alias t="tmux a -t vivid"
+alias t="tmux a -t ias"
 
 # ZSH plugins
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
