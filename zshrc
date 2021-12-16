@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=$HOME/dotfiles/oh-my-zsh
+export ZSH=$HOME/dev/dotfiles/oh-my-zsh
 
 # Set default editor to Vim
 export EDITOR="vim"
