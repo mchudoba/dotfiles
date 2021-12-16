@@ -5,8 +5,10 @@ export ZSH=$HOME/dev/oh-my-zsh
 export EDITOR="vim"
 
 # Java environment setup
-export PATH="$HOME/.jenv/bin:$PATH"
-eval "$(jenv init -)"
+if command -v jenv 1>/dev/null 2>&1; then
+  export PATH="$HOME/.jenv/bin:$PATH"
+  eval "$(jenv init -)"
+fi
 
 # Python user packages (pip install --user)
 export PATH="$HOME/.local/bin:$PATH"
@@ -22,9 +24,6 @@ function _pip_completion {
 }
 compctl -K _pip_completion pip
 # pip zsh completion end
-
-# Use mysql 5.6
-export PATH="/usr/local/opt/mysql@5.6/bin:$PATH"
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -90,8 +89,8 @@ alias tn="tmux new -s ps"
 alias ta="tmux a -t ps"
 
 # ZSH plugins
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Ctrl+Space to accept current auto suggestion
 bindkey '^ ' autosuggest-accept
