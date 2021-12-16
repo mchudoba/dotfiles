@@ -86,7 +86,8 @@ alias gcl="git checkout @{-1}"
 alias gcs="git checkout stage"
 alias gb="git branch"
 alias gba="git branch -a"
-alias t="tmux a -t ias"
+alias tn="tmux new -s ps"
+alias ta="tmux a -t ps"
 
 # ZSH plugins
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
