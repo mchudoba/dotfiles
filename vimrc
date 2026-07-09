@@ -14,7 +14,7 @@ set nocompatible
 filetype plugin indent on
 
 " vim-plug plugin setup
-source ~/dev/dotfiles/plugins.vim
+source ~/.vim/plugins.vim
 
 " Set text encoding
 set encoding=utf-8

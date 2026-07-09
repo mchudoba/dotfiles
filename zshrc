@@ -1,75 +1,49 @@
-# Path to your oh-my-zsh installation.
-export ZSH=$HOME/dev/oh-my-zsh
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
-# Set default editor to Vim
+##### Environment
+
 export EDITOR="vim"
+export PATH="$PATH:$HOME/.local/bin"   # pipx, pip install --user
+export PATH="$PATH:$HOME/go/bin"       # Go binaries
+export CLICOLOR=1                      # colorized ls
 
-# Java environment setup
-if command -v jenv 1>/dev/null 2>&1; then
-  export PATH="$HOME/.jenv/bin:$PATH"
-  eval "$(jenv init -)"
+##### Options
+
+unsetopt autocd                         # don't cd just by typing a directory name
+
+##### History
+
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=50000
+SAVEHIST=50000
+setopt SHARE_HISTORY HIST_IGNORE_ALL_DUPS HIST_IGNORE_SPACE HIST_REDUCE_BLANKS
+
+##### Completion
+
+[[ -d ~/.docker/completions ]] && fpath=(~/.docker/completions $fpath)
+autoload -Uz compinit && compinit
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'   # case-insensitive
+zstyle ':completion:*' menu select
+
+##### Tools
+
+# uv completions
+if command -v uv >/dev/null 2>&1; then
+  eval "$(uv generate-shell-completion zsh)"
+  eval "$(uvx --generate-shell-completion zsh)"
 fi
 
-# Python user packages (pip install --user)
-export PATH="$HOME/.local/bin:$PATH"
-
-# pip zsh completion start
-function _pip_completion {
-  local words cword
-  read -Ac words
-  read -cn cword
-  reply=( $( COMP_WORDS="$words[*]" \
-             COMP_CWORD=$(( cword-1 )) \
-             PIP_AUTO_COMPLETE=1 $words[1] ) )
-}
-compctl -K _pip_completion pip
-# pip zsh completion end
-
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-ZSH_THEME="matt"
-
-# Uncomment the following line to disable bi-weekly auto-update checks.
-DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-DISABLE_AUTO_TITLE="true"
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# plugins=(brew, mvn)
-
-source $ZSH/oh-my-zsh.sh
-[ -f ~/.env ] && source ~/.env
-
-unsetopt correct
-#unsetopt autocd
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# NVM setup and bash completion
+# nvm
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[[ -r $NVM_DIR/bash_completion ]] && \. $NVM_DIR/bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
-# pyenv setup
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init --path)"
-  eval "$(pyenv init -)"
-  export LDFLAGS="-L/usr/local/opt/zlib/lib -L/usr/local/opt/bzip2/lib"
-  export CPPFLAGS="-I/usr/local/opt/zlib/include -I/usr/local/opt/bzip2/include"
-fi
-
-# Virtualenv wrapper
-function venv { source "$1"/bin/activate }
-
-# Require virtualenv to install Pip packages
-export PIP_REQUIRE_VIRTUALENV=true
-
-# Custom aliases
+##### Aliases
 
 alias c="clear"
 alias sl="ls"
@@ -82,15 +56,23 @@ alias gl="git log"
 alias glo="git log --oneline"
 alias gc="git checkout"
 alias gcl="git checkout @{-1}"
-alias gcs="git checkout stage"
 alias gb="git branch"
 alias gba="git branch -a"
-alias tn="tmux new -s ps"
-alias ta="tmux a -t ps"
+alias tf="terraform"
+alias dc="docker compose"
 
-# ZSH plugins
+##### Plugins
+
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+bindkey '^ ' autosuggest-accept        # Ctrl+Space accepts the suggestion
 
-# Ctrl+Space to accept current auto suggestion
-bindkey '^ ' autosuggest-accept
+##### Prompt (powerlevel10k)
+
+source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+##### Machine-local / work config (not tracked in dotfiles)
+
+[[ ! -f ~/.zshrc.local ]] || source ~/.zshrc.local

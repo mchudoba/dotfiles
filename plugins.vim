@@ -22,9 +22,6 @@ Plug 'tpope/vim-sleuth'
 " Automatically complete brackets, parentheses, etc.
 Plug 'jiangmiao/auto-pairs'
 
-" Navigate between vim and tmux panes easily
-Plug 'christoomey/vim-tmux-navigator'
-
 " Status line customization
 Plug 'itchyny/lightline.vim'
 

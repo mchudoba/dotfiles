@@ -24,3 +24,5 @@
     changed = green
     untracked = blue
 
+[fetch]
+    prune = true
