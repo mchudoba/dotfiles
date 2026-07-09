@@ -4,7 +4,8 @@
 set -euo pipefail
 
 DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-GITDIR="${XDG_CONFIG_HOME:-$HOME/.config}/git"
+CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"
+GITDIR="$CONFIG/git"
 
 link() {
   local src="$DOTFILES/$1" dest="$2"
@@ -32,6 +33,9 @@ link gitignore_global "$GITDIR/ignore"
 
 # Vim
 link vimrc            "$HOME/.vimrc"
+
+# fd (also what fzf's Ctrl-T / Alt-C walk with)
+link fdignore         "$CONFIG/fd/ignore"
 
 # Machine-local config: copy (don't symlink) so edits stay off the repo.
 if [[ ! -f "$HOME/.zshrc.local" ]]; then

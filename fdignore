@@ -1,0 +1,23 @@
+# Global ignore for fd (and anything else reading .ignore files).
+
+.git/
+.DS_Store
+
+# macOS
+Library/
+.Trash/
+Applications/
+
+# Caches and language toolchains
+.cache/
+.npm/
+.nvm/
+.cargo/
+.rustup/
+**/go/pkg/
+OrbStack/
+
+# Project junk, for when we're not in a git repo and .gitignore can't help
+node_modules/
+.venv/
+__pycache__/

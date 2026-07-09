@@ -28,20 +28,34 @@ setopt SHARE_HISTORY HIST_IGNORE_ALL_DUPS HIST_IGNORE_SPACE HIST_REDUCE_BLANKS
 [[ -d ~/.docker/completions ]] && fpath=(~/.docker/completions $fpath)
 autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'   # case-insensitive
-zstyle ':completion:*' menu select
+# fzf-tab replaces the completion menu; zsh's own menu must stay out of its way.
+zstyle ':completion:*' menu no
+zstyle ':completion:*:descriptions' format '[%d]'           # fzf-tab groups by these
+zstyle ':completion:*:git-checkout:*' sort false            # keep git's order, not alphabetical
 
 ##### Tools
 
-# uv completions
-if command -v uv >/dev/null 2>&1; then
-  eval "$(uv generate-shell-completion zsh)"
-  eval "$(uvx --generate-shell-completion zsh)"
-fi
+# fzf: Ctrl-R history, Ctrl-T file paths, Alt-C cd.
+# The widgets each overwrite FZF_DEFAULT_COMMAND with their own *_COMMAND before
+# running, so setting only FZF_DEFAULT_COMMAND would not reach them; it applies
+# to a bare `fzf`. Unset, the widgets use fzf's built-in walker, which knows
+# nothing about .gitignore — hence fd, which honors it inside a repo and
+# ~/.config/fd/ignore everywhere else.
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND='fd --type d --hidden --follow'
+export FZF_CTRL_T_OPTS="
+  --preview 'bat -n --color=always --line-range :200 {}'"
+export FZF_ALT_C_OPTS="
+  --preview 'tree -C {} | head -200'"
+export FZF_CTRL_R_OPTS="
+  --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
+  --color header:italic
+  --header 'Ctrl-Y copies the command to the clipboard'"
+source <(fzf --zsh)
 
-# nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+# zoxide: `z <substring>` jumps to a frecent directory, `zi` picks interactively
+eval "$(zoxide init zsh)"
 
 ##### Aliases
 
@@ -62,6 +76,12 @@ alias tf="terraform"
 alias dc="docker compose"
 
 ##### Plugins
+
+# fzf-tab must load after compinit and before anything that wraps ZLE widgets.
+source /opt/homebrew/share/fzf-tab/fzf-tab.zsh
+# BSD ls: -G colors, CLICOLOR_FORCE keeps it colored when not a tty.
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'CLICOLOR_FORCE=1 ls -1G $realpath'
+zstyle ':fzf-tab:*' switch-group '<' '>'   # move between [groups] from the descriptions format
 
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh

@@ -26,6 +26,7 @@ files as `<file>.bak`, seeds the local config templates, and offers to run
 | `gitconfig.local.example` | copied to `~/.config/git/config.local` | machine-local git config, **not** symlinked |
 | `gitconfig.work.example` | copied to `~/.config/git/config.work` | work git config, **not** symlinked |
 | `gitignore_global` | `~/.config/git/ignore` | global gitignore |
+| `fdignore` | `~/.config/fd/ignore` | dirs `fd` skips outside a git repo (fzf walks with `fd`) |
 | `vimrc` | `~/.vimrc` | vim config (no plugins, stock vim 9.1+) |
 | `Brewfile` | — | `brew bundle` package list |
 
