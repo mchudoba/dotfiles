@@ -4,16 +4,19 @@
 #####################################################
 # Shell
 #####################################################
-brew "powerlevel10k"            # zsh prompt theme
+brew "powerlevel10k"
 brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
 
 #####################################################
+# Terminal
+#####################################################
+cask "font-meslo-lg-nerd-font"
+
+#####################################################
 # Core CLI
 #####################################################
-brew "gh"                       # GitHub CLI (also used for git auth token)
+brew "gh"
 brew "jq"
 brew "tree"
 brew "watch"
-brew "httpie"                   # friendly curl replacement
-brew "uv"                       # Python package manager

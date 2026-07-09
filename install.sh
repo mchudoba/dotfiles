@@ -19,6 +19,7 @@ link() {
 
 # Shell / git
 link zshrc            "$HOME/.zshrc"
+link p10k.zsh         "$HOME/.p10k.zsh"
 link gitconfig        "$HOME/.gitconfig"
 link gitignore_global "$HOME/.gitignore_global"
 
