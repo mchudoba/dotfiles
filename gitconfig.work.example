@@ -1,0 +1,4 @@
+# Work git identity. Copied to ~/.config/git/config.work by install.sh and
+# pulled in by the includeIf rules in ~/.config/git/config.local. Not symlinked.
+[user]
+  email = you@work.example

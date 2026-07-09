@@ -4,6 +4,7 @@
 set -euo pipefail
 
 DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+GITDIR="${XDG_CONFIG_HOME:-$HOME/.config}/git"
 
 link() {
   local src="$DOTFILES/$1" dest="$2"
@@ -17,11 +18,17 @@ link() {
   echo "linked $dest"
 }
 
-# Shell / git
+if [[ -e "$HOME/.gitconfig" ]]; then
+  echo "WARNING: ~/.gitconfig overrides ~/.config/git/config — fold it in and delete it"
+fi
+
+# Shell
 link zshrc            "$HOME/.zshrc"
 link p10k.zsh         "$HOME/.p10k.zsh"
-link gitconfig        "$HOME/.gitconfig"
-link gitignore_global "$HOME/.gitignore_global"
+
+# Git
+link gitconfig        "$GITDIR/config"
+link gitignore_global "$GITDIR/ignore"
 
 # Vim
 link vimrc            "$HOME/.vimrc"
@@ -30,6 +37,14 @@ link vimrc            "$HOME/.vimrc"
 if [[ ! -f "$HOME/.zshrc.local" ]]; then
   cp "$DOTFILES/zshrc.local.example" "$HOME/.zshrc.local"
   echo "created ~/.zshrc.local from template — review it"
+fi
+if [[ ! -f "$GITDIR/config.local" ]]; then
+  cp "$DOTFILES/gitconfig.local.example" "$GITDIR/config.local"
+  echo "created $GITDIR/config.local from template — review it"
+fi
+if [[ ! -f "$GITDIR/config.work" ]]; then
+  cp "$DOTFILES/gitconfig.work.example" "$GITDIR/config.work"
+  echo "created $GITDIR/config.work from template — review it"
 fi
 
 # Homebrew packages

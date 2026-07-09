@@ -17,6 +17,7 @@ cask "font-meslo-lg-nerd-font"
 # Core CLI
 #####################################################
 brew "gh"
+brew "git-delta"
 brew "jq"
 brew "tree"
 brew "watch"
