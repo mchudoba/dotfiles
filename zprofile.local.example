@@ -1,0 +1,6 @@
+# Machine-local login-shell config. Copied to ~/.zprofile.local by install.sh
+# and sourced at the end of ~/.zprofile. Not symlinked — edit it freely without
+# touching the dotfiles repo.
+#
+# PATH entries and tool integrations that only exist on this machine belong here
+# (OrbStack, Docker Desktop, etc).

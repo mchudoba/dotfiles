@@ -7,6 +7,10 @@ DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"
 GITDIR="$CONFIG/git"
 
+if [[ -e "$HOME/.gitconfig" ]]; then
+  echo "WARNING: ~/.gitconfig overrides ~/.config/git/config — fold it in and delete it"
+fi
+
 link() {
   local src="$DOTFILES/$1" dest="$2"
   mkdir -p "$(dirname "$dest")"
@@ -19,12 +23,9 @@ link() {
   echo "linked $dest"
 }
 
-if [[ -e "$HOME/.gitconfig" ]]; then
-  echo "WARNING: ~/.gitconfig overrides ~/.config/git/config — fold it in and delete it"
-fi
-
 # Shell
 link zshrc            "$HOME/.zshrc"
+link zprofile         "$HOME/.zprofile"
 link p10k.zsh         "$HOME/.p10k.zsh"
 
 # Git
@@ -38,18 +39,13 @@ link vimrc            "$HOME/.vimrc"
 link fdignore         "$CONFIG/fd/ignore"
 
 # Machine-local config: copy (don't symlink) so edits stay off the repo.
-if [[ ! -f "$HOME/.zshrc.local" ]]; then
-  cp "$DOTFILES/zshrc.local.example" "$HOME/.zshrc.local"
-  echo "created ~/.zshrc.local from template — review it"
-fi
-if [[ ! -f "$GITDIR/config.local" ]]; then
-  cp "$DOTFILES/gitconfig.local.example" "$GITDIR/config.local"
-  echo "created $GITDIR/config.local from template — review it"
-fi
-if [[ ! -f "$GITDIR/config.work" ]]; then
-  cp "$DOTFILES/gitconfig.work.example" "$GITDIR/config.work"
-  echo "created $GITDIR/config.work from template — review it"
-fi
+seed() {
+  [[ -f "$2" ]] || { cp "$DOTFILES/$1" "$2"; echo "created $2 from template — review it"; }
+}
+seed zshrc.local.example     "$HOME/.zshrc.local"
+seed zprofile.local.example  "$HOME/.zprofile.local"
+seed gitconfig.local.example "$GITDIR/config.local"
+seed gitconfig.work.example  "$GITDIR/config.work"
 
 # Homebrew packages
 if command -v brew >/dev/null 2>&1; then
