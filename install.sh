@@ -23,10 +23,7 @@ link gitconfig        "$HOME/.gitconfig"
 link gitignore_global "$HOME/.gitignore_global"
 
 # Vim
-link vimrc                  "$HOME/.vimrc"
-link plugins.vim            "$HOME/.vim/plugins.vim"
-link colors/vim             "$HOME/.vim/colors"
-link colors/vim/lightline/lena.vim "$HOME/.vim/autoload/lightline/colorscheme/lena.vim"
+link vimrc            "$HOME/.vimrc"
 
 # Machine-local config: copy (don't symlink) so edits stay off the repo.
 if [[ ! -f "$HOME/.zshrc.local" ]]; then

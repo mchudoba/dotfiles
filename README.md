@@ -23,9 +23,8 @@ run `brew bundle`. It's idempotent — safe to re-run.
 | `zshrc.local.example` | copied to `~/.zshrc.local` | machine-local / work config, **not** symlinked |
 | `gitconfig` | `~/.gitconfig` | git settings |
 | `gitignore_global` | `~/.gitignore_global` | global gitignore |
-| `vimrc` | `~/.vimrc` | vim config |
-| `plugins.vim` | `~/.vim/plugins.vim` | vim-plug plugin list |
-| `colors/` | `~/.vim/colors`, iTerm2 (manual) | vim + iTerm2 color schemes |
+| `vimrc` | `~/.vimrc` | vim config (no plugins, stock vim 9.1+) |
+| `colors/iterm2/` | iTerm2 (manual) | iTerm2 color schemes |
 | `Brewfile` | — | `brew bundle` package list |
 | `cleanup-git-branches` | — | utility: prune merged branches across repos |
 
@@ -36,5 +35,3 @@ run `brew bundle`. It's idempotent — safe to re-run.
 - **Regenerate the Brewfile** from what's installed: `brew bundle dump --force`.
 - **iTerm2 colors** must be imported manually: Preferences → Profiles → Colors →
   Import (`colors/iterm2/*.itermcolors`).
-- **vim plugins** install automatically on first `vim` launch (vim-plug bootstraps
-  itself, then runs `:PlugInstall`).
