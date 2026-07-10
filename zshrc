@@ -73,7 +73,6 @@ eval "$(zoxide init zsh)"
 ##### Aliases
 
 alias c="clear"
-alias sl="ls"
 alias lsa="ls -lah"
 alias gs="git status"
 alias gd="git diff"
@@ -82,10 +81,8 @@ alias gp="git pull"
 alias gl="git log"
 alias glo="git log --oneline"
 alias gc="git checkout"
-alias gcl="git checkout @{-1}"
 alias gb="git branch"
 alias gba="git branch -a"
-alias tf="terraform"
 alias dc="docker compose"
 
 ##### Plugins
