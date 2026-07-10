@@ -4,6 +4,7 @@ unlet! skip_defaults_vim
 runtime defaults.vim
 
 silent! packadd! comment                       " gc / gcc / gC, plus ic / ac
+silent! packadd! matchit                       " % jumps between if/endif, tags, etc.
 
 if exists('+termguicolors') && $COLORTERM =~# 'truecolor\|24bit'
   set termguicolors

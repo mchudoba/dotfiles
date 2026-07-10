@@ -34,6 +34,7 @@
 [rerere]
   # Record conflict resolutions and replay them when the same conflict recurs.
   enabled = true
+  autoupdate = true
 
 [diff]
   algorithm = histogram

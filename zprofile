@@ -6,7 +6,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 # Tied to $PATH. -U drops duplicates, keeping the leftmost, so re-sourcing this
 # file doesn't grow PATH. Prepended: our binaries shadow the system's.
 typeset -U path
-path=("$HOME/.local/bin" "$HOME/go/bin" $path)
+path=("$HOME/.local/bin" "$HOME/go/bin" "$HOME/.cargo/bin" $path)
 
 ##### Machine-local (not tracked in dotfiles)
 

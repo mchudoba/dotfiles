@@ -15,10 +15,7 @@ export CLICOLOR=1                      # colorized ls
 
 unsetopt BEEP                          # /etc/zshrc turns it on
 
-# zsh picks vi keybindings when EDITOR contains "vi" at startup — that reads the
-# environment and ~/.zshenv, both of which run before zle is set up. This file
-# runs after, so the export above has no effect on the keymap. Bind it outright
-# rather than let the choice hinge on where EDITOR happens to be set.
+# EDITOR contains "vi", which would otherwise get us vi keybindings.
 bindkey -e
 
 ##### History
@@ -26,41 +23,40 @@ bindkey -e
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=50000
 SAVEHIST=50000
+# SHARE_HISTORY also gives us incremental appends and timestamped entries.
 setopt SHARE_HISTORY HIST_IGNORE_ALL_DUPS HIST_IGNORE_SPACE HIST_REDUCE_BLANKS
 
 ##### Completion
 
 [[ -d ~/.docker/completions ]] && fpath=(~/.docker/completions $fpath)
 
-# Keep the dump out of $HOME. Regenerating it costs ~450ms but only happens when
-# $fpath changes; a plain compinit against a valid dump is ~20ms. The popular
-# `compinit -C` once-a-day trick shaves ~8ms off that and makes newly installed
-# completions invisible until the dump is deleted by hand — not a good trade.
+# Keep the dump out of $HOME. compinit rebuilds it when the number of completion
+# files changes; `compinit -C` skips that check and misses new completions.
 _zdump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump"
 mkdir -p "${_zdump:h}"
 autoload -Uz compinit && compinit -d "$_zdump"
 unset _zdump
 
-# '' tries an exact match first; only if that finds nothing do we fall back to
-# the case-insensitive pass. zshcompsys recommends [:lower:]/[:upper:] over
-# a-z/A-Z — the matcher doesn't handle multibyte characters.
+# Exact match first, case-insensitive only if that finds nothing.
 zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}'
-# fzf-tab replaces the completion menu; zsh's own menu must stay out of its way.
-zstyle ':completion:*' menu no
+zstyle ':completion:*' menu no                              # fzf-tab replaces the menu
+zstyle ':completion:*' special-dirs true                    # complete ../ and ./
 zstyle ':completion:*:descriptions' format '[%d]'           # fzf-tab groups by these
 zstyle ':completion:*:git-checkout:*' sort false            # keep git's order, not alphabetical
 
 ##### Tools
 
 # fzf: Ctrl-R history, Ctrl-T file paths, Alt-C cd.
-# The widgets each overwrite FZF_DEFAULT_COMMAND with their own *_COMMAND before
-# running, so setting only FZF_DEFAULT_COMMAND would not reach them; it applies
-# to a bare `fzf`. Unset, the widgets use fzf's built-in walker, which knows
-# nothing about .gitignore — hence fd, which honors it inside a repo and
-# ~/.config/fd/ignore everywhere else.
-export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow'
+# The widgets don't read FZF_DEFAULT_COMMAND, so fd has to be wired into each
+# one; left unset they fall back to fzf's own walker, which ignores .gitignore.
+# ctrl-/ otherwise toggles result-list wrapping — a fair trade. Not ctrl-p:
+# that's fzf's up-match. Preview scrolling is shift-up/shift-down by default.
+export FZF_DEFAULT_OPTS='--height 40% --layout reverse --border --bind ctrl-/:toggle-preview'
+
+# --strip-cwd-prefix drops the leading ./ from every result.
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --strip-cwd-prefix'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_COMMAND='fd --type d --hidden --follow'
+export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --strip-cwd-prefix'
 export FZF_CTRL_T_OPTS="
   --preview 'bat -n --color=always --line-range :200 {}'"
 export FZF_ALT_C_OPTS="
@@ -99,6 +95,10 @@ source /opt/homebrew/share/fzf-tab/fzf-tab.zsh
 # BSD ls: -G colors, CLICOLOR_FORCE keeps it colored when not a tty.
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'CLICOLOR_FORCE=1 ls -1G $realpath'
 zstyle ':fzf-tab:*' switch-group '<' '>'   # move between [groups] from the descriptions format
+# fzf-tab ignores FZF_DEFAULT_OPTS. It can be told to honor it, but some flags
+# break the completion popup, so pass the safe ones through explicitly instead.
+zstyle ':fzf-tab:*' fzf-flags --height=40% --layout=reverse
+zstyle ':fzf-tab:*' fzf-min-height 15
 
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey '^ ' autosuggest-accept        # Ctrl+Space accepts the suggestion
@@ -111,9 +111,8 @@ source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 
 ##### Syntax highlighting
 
-# Sourced last: it wraps every ZLE widget defined above it. On zsh 5.9 it takes
-# the zle-line-pre-redraw hook instead and wraps nothing, so today the position
-# is moot — but that fallback is what the docs promise, not this shell.
+# Sourced last: its hook has to register after anything else that modifies the
+# command-line buffer, which zsh-autosuggestions does.
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 ##### Machine-local / work config (not tracked in dotfiles)
