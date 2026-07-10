@@ -5,11 +5,11 @@
 # Shell — sourced or invoked by zshrc
 #####################################################
 brew "bat"                    # fzf Ctrl-T preview
+brew "eza"                    # better ls; fzf Alt-C tree preview
 brew "fd"                     # fzf Ctrl-T / Alt-C walker
 brew "fzf"
 brew "fzf-tab"
 brew "powerlevel10k"
-brew "tree"                   # fzf Alt-C preview
 brew "zoxide"
 brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"

@@ -61,6 +61,14 @@ safe to re-run.
 
 **fzf-tab** — `Tab` completion becomes an fzf picker with previews. `<` / `>` move between completion groups.
 
+**eza** — modern `ls` (truecolor, git-aware, Nerd Font icons):
+
+| Command | Does |
+|---------|------|
+| `ls` | listing, directories first, icons |
+| `lsa` | long + hidden + git-status column |
+| `lt` | 2-level directory tree |
+
 **git** (via delta pager + config):
 
 | Command | Does |
@@ -73,7 +81,7 @@ safe to re-run.
 - `git pull` rebases with autostash; `git push` auto-creates the upstream on new branches.
 - **rerere** remembers conflict resolutions and replays them.
 
-Other aliases: `c` clear · `lsa` = `ls -lah` · `dc` = `docker compose`.
+Other aliases: `c` clear · `dc` = `docker compose`.
 
 ## Notes
 
