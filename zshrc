@@ -62,7 +62,7 @@ export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --strip-cwd-prefix'
 export FZF_CTRL_T_OPTS="
   --preview 'bat -n --color=always --line-range :200 {}'"
 export FZF_ALT_C_OPTS="
-  --preview 'eza --tree --color=always --icons=auto {} | head -200'"
+  --preview 'eza --tree --color=always {} | head -200'"
 export FZF_CTRL_R_OPTS="
   --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
   --color header:italic
@@ -75,9 +75,9 @@ command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
 ##### Aliases
 
 alias c="clear"
-alias ls="eza --group-directories-first --icons=auto"
-alias lsa="eza -lah --git --group-directories-first --icons=auto"
-alias lt="eza --tree --level=2 --icons=auto"
+alias ls="eza --group-directories-first"
+alias lsa="eza -lah --git --group-directories-first"
+alias lt="eza --tree --level=2"
 alias gs="git status"
 alias gd="git diff"
 alias gdc="git diff --cached"
@@ -93,9 +93,8 @@ alias dc="docker compose"
 
 # fzf-tab must load after compinit and before anything that wraps ZLE widgets.
 _src /opt/homebrew/share/fzf-tab/fzf-tab.zsh
-# fzf-tab runs previews without a tty, so auto-detection turns color/icons off;
-# force both on.
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always --icons=always --group-directories-first $realpath'
+# fzf-tab runs previews without a tty, so auto-detection turns color off; force it on.
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always --group-directories-first $realpath'
 zstyle ':fzf-tab:*' switch-group '<' '>'   # move between [groups] from the descriptions format
 # fzf-tab ignores FZF_DEFAULT_OPTS. It can be told to honor it, but some flags
 # break the completion popup, so pass the safe ones through explicitly instead.
