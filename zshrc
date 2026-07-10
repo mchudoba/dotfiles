@@ -8,7 +8,6 @@ fi
 ##### Environment
 # PATH is built in ~/.zprofile — it has to run after /etc/zprofile's path_helper.
 
-export EDITOR="vim"
 export CLICOLOR=1                      # colorized ls
 
 ##### Options and keys
@@ -46,6 +45,9 @@ zstyle ':completion:*:git-checkout:*' sort false            # keep git's order, 
 
 ##### Tools
 
+# Source a file only if it's readable.
+_src() { [[ -r $1 ]] && source $1 }
+
 # fzf: Ctrl-R history, Ctrl-T file paths, Alt-C cd.
 # The widgets don't read FZF_DEFAULT_COMMAND, so fd has to be wired into each
 # one; left unset they fall back to fzf's own walker, which ignores .gitignore.
@@ -65,10 +67,10 @@ export FZF_CTRL_R_OPTS="
   --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
   --color header:italic
   --header 'Ctrl-Y copies the command to the clipboard'"
-source <(fzf --zsh)
+command -v fzf >/dev/null && source <(fzf --zsh)
 
 # zoxide: `z <substring>` jumps to a frecent directory, `zi` picks interactively
-eval "$(zoxide init zsh)"
+command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
 
 ##### Aliases
 
@@ -88,7 +90,7 @@ alias dc="docker compose"
 ##### Plugins
 
 # fzf-tab must load after compinit and before anything that wraps ZLE widgets.
-source /opt/homebrew/share/fzf-tab/fzf-tab.zsh
+_src /opt/homebrew/share/fzf-tab/fzf-tab.zsh
 # BSD ls: -G colors, CLICOLOR_FORCE keeps it colored when not a tty.
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'CLICOLOR_FORCE=1 ls -1G $realpath'
 zstyle ':fzf-tab:*' switch-group '<' '>'   # move between [groups] from the descriptions format
@@ -97,12 +99,12 @@ zstyle ':fzf-tab:*' switch-group '<' '>'   # move between [groups] from the desc
 zstyle ':fzf-tab:*' fzf-flags --height=40% --layout=reverse
 zstyle ':fzf-tab:*' fzf-min-height 15
 
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+_src /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey '^ ' autosuggest-accept        # Ctrl+Space accepts the suggestion
 
 ##### Prompt (powerlevel10k)
 
-source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
+_src /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
@@ -110,7 +112,8 @@ source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 
 # Sourced last: its hook has to register after anything else that modifies the
 # command-line buffer, which zsh-autosuggestions does.
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+_src /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+unset -f _src
 
 ##### Machine-local / work config (not tracked in dotfiles)
 

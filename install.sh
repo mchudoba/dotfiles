@@ -8,7 +8,7 @@ CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"
 GITDIR="$CONFIG/git"
 
 if [[ -e "$HOME/.gitconfig" ]]; then
-  echo "WARNING: ~/.gitconfig overrides ~/.config/git/config — fold it in and delete it"
+  echo "WARNING: ~/.gitconfig takes precedence over ~/.config/git/config — fold it in and delete it"
 fi
 
 link() {
@@ -24,6 +24,7 @@ link() {
 }
 
 # Shell
+link zshenv           "$HOME/.zshenv"
 link zshrc            "$HOME/.zshrc"
 link zprofile         "$HOME/.zprofile"
 link p10k.zsh         "$HOME/.p10k.zsh"
@@ -49,7 +50,7 @@ seed gitconfig.work.example  "$GITDIR/config.work"
 
 # Homebrew packages
 if command -v brew >/dev/null 2>&1; then
-  read -r -p "Run 'brew bundle' to install packages? [y/N] " ans
+  read -r -p "Run 'brew bundle' to install packages? [y/N] " ans || ans=n
   [[ "$ans" == [Yy]* ]] && brew bundle --file="$DOTFILES/Brewfile"
 else
   echo "Homebrew not found — install it first: https://brew.sh"

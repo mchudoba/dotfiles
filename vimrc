@@ -28,7 +28,7 @@ set undofile undodir=~/.vim/undo
 call mkdir(expand('~/.vim/undo'), 'p')
 
 let mapleader = " "
-nnoremap <Leader>w :w<CR>
-nnoremap <Leader>, :nohlsearch<CR>
+nnoremap <Leader>w <Cmd>w<CR>
+nnoremap <Leader>, <Cmd>nohlsearch<CR>
 nnoremap <expr> j v:count ? 'j' : 'gj'
 nnoremap <expr> k v:count ? 'k' : 'gk'
