@@ -1,26 +1,59 @@
-[core]
-  excludesfile = ~/.gitignore_global
 [user]
-  email = mchudoba5@gmail.com
   name = Matt Chudoba
-[color]
-    diff = auto
-    status = auto
-    branch = auto
-    interactive = auto
-    ui = true
-    pager = true
-[color "branch"]
-    current = yellow reverse
-    local = yellow
-    remote = green
-[color "diff"]
-    meta = blue
-    frag = magenta
-    old = red
-    new = green
-[color "status"]
-    added = yellow
-    changed = green
-    untracked = blue
+  email = mchudoba5@gmail.com
 
+[core]
+  pager = delta
+
+[interactive]
+  diffFilter = delta --color-only
+
+[delta]
+  # n / N jump between files in the pager.
+  navigate = true
+  line-numbers = true
+
+[init]
+  defaultBranch = main
+
+[fetch]
+  prune = true
+
+[pull]
+  rebase = true
+
+[rebase]
+  autostash = true
+  updateRefs = true
+
+[push]
+  autoSetupRemote = true
+
+[merge]
+  conflictstyle = zdiff3
+
+[rerere]
+  # Record conflict resolutions and replay them when the same conflict recurs.
+  enabled = true
+  autoupdate = true
+
+[diff]
+  algorithm = histogram
+  colorMoved = default
+
+[branch]
+  sort = -committerdate
+
+[tag]
+  # Sort tags as versions (v1.9 before v1.10), not lexically.
+  sort = version:refname
+
+[commit]
+  verbose = true
+
+# Machine-local overrides.
+# Untracked; a missing path is silently ignored. Relative paths resolve against
+# the directory holding this file — ~/.config/git — not the symlink target.
+# Must stay last: an include only overrides the settings above it.
+[include]
+  path = ./config.local

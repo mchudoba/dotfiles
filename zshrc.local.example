@@ -1,0 +1,3 @@
+# Machine-local config. Copied to ~/.zshrc.local by install.sh and
+# sourced at the end of ~/.zshrc. Not symlinked — edit ~/.zshrc.local freely
+# without touching the dotfiles repo.

@@ -1,0 +1,8 @@
+# Machine-local git config. Copied to ~/.config/git/config.local by install.sh
+# and included at the end of ~/.config/git/config. Not symlinked — edit it
+# freely without touching the dotfiles repo.
+
+# [includeIf "hasconfig:remote.*.url:git@github.com:YourOrg/**"]
+#   path = ./config.work
+# [includeIf "hasconfig:remote.*.url:https://github.com/YourOrg/**"]
+#   path = ./config.work
