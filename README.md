@@ -5,7 +5,14 @@ Personal dotfiles
 ## Setup on a new machine
 
 ```sh
-# 1. Install Homebrew (https://brew.sh), then:
+# 1. Install Homebrew (https://brew.sh)
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# 2. Install gh and authenticate GitHub. Pick SSH when prompted.
+brew install gh
+gh auth login
+
+# 3. Clone and install
 git clone git@github.com:mchudoba/dotfiles.git ~/dev/dotfiles
 cd ~/dev/dotfiles
 ./install.sh
@@ -13,7 +20,8 @@ cd ~/dev/dotfiles
 
 `install.sh` symlinks the configs into place, backs up any pre-existing real
 files as `<file>.bak`, seeds the local config templates, and offers to run
-`brew bundle`. It's idempotent — safe to re-run.
+`brew bundle` (which installs everything else, `gh` included). It's idempotent —
+safe to re-run.
 
 ## What's here
 
@@ -32,6 +40,40 @@ files as `<file>.bak`, seeds the local config templates, and offers to run
 | `fdignore` | `~/.config/fd/ignore` | dirs `fd` skips outside a git repo (fzf walks with `fd`) |
 | `vimrc` | `~/.vimrc` | vim config (no plugins, stock vim 9.1+) |
 | `Brewfile` | — | `brew bundle` package list |
+
+## Tool cheatsheet
+
+**fzf** — fuzzy finder, keys work in any shell:
+
+| Key | Does |
+|-----|------|
+| `Ctrl-R` | fuzzy-search command history (`Ctrl-Y` copies instead of runs) |
+| `Ctrl-T` | insert file path(s) into the current command line |
+| `Alt-C` | fuzzy-pick a directory and `cd` into it |
+| `Ctrl-/` | toggle the preview pane (inside any picker) |
+
+**zoxide** — `cd` that learns where you go:
+
+| Command | Does |
+|---------|------|
+| `z foo` | jump to the most-used dir matching "foo" |
+| `zi` | pick from directory history interactively |
+
+**fzf-tab** — `Tab` completion becomes an fzf picker with previews. `<` / `>` move between completion groups.
+
+**git** (via delta pager + config):
+
+| Command | Does |
+|---------|------|
+| `gs` / `gd` / `gdc` | status / diff / diff --cached |
+| `gp` / `gl` / `glo` | pull (rebases) / log / log --oneline |
+| `gc` / `gb` / `gba` | checkout / branch / branch -a |
+| `n` / `N` | (in a diff pager) jump between files |
+
+- `git pull` rebases with autostash; `git push` auto-creates the upstream on new branches.
+- **rerere** remembers conflict resolutions and replays them.
+
+Other aliases: `c` clear · `lsa` = `ls -lah` · `dc` = `docker compose`.
 
 ## Notes
 
