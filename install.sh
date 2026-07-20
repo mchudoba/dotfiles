@@ -36,6 +36,9 @@ link gitignore_global "$GITDIR/ignore"
 # Vim
 link vimrc            "$HOME/.vimrc"
 
+# Ghostty
+link ghostty.conf     "$CONFIG/ghostty/config.ghostty"
+
 # fd (also what fzf's Ctrl-T / Alt-C walk with)
 link fdignore         "$CONFIG/fd/ignore"
 

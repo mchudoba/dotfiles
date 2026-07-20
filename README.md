@@ -39,6 +39,7 @@ safe to re-run.
 | `gitignore_global` | `~/.config/git/ignore` | global gitignore |
 | `fdignore` | `~/.config/fd/ignore` | dirs `fd` skips outside a git repo (fzf walks with `fd`) |
 | `vimrc` | `~/.vimrc` | vim config (no plugins, stock vim 9.1+) |
+| `ghostty.conf` | `~/.config/ghostty/config.ghostty` | Ghostty terminal config |
 | `Brewfile` | — | `brew bundle` package list |
 
 ## Tool cheatsheet
